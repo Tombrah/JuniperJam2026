@@ -293,7 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FoodItem
   state: 0
   cookTime: 10
-  percentageThreshold: 1.5
+  burnThreshold: 1.5
   percentage: 0
 --- !u!54 &106746986
 Rigidbody:
@@ -1311,7 +1311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FoodItem
   state: 0
   cookTime: 10
-  percentageThreshold: 1.5
+  burnThreshold: 1.5
   percentage: 0
 --- !u!54 &714422492
 Rigidbody:
@@ -1693,7 +1693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FoodItem
   state: 0
   cookTime: 10
-  percentageThreshold: 1.5
+  burnThreshold: 1.5
   percentage: 0
 --- !u!114 &1025761578
 MonoBehaviour:
@@ -1832,7 +1832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FoodItem
   state: 0
   cookTime: 10
-  percentageThreshold: 1.5
+  burnThreshold: 1.5
   percentage: 0
 --- !u!54 &1244249169
 Rigidbody:
@@ -2007,7 +2007,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52ac49e3ef4aa5f4e8b57f71729e7cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlateSpinner
-  speed: 10
+  baseSpeed: 20
+  forwardBoost: 15
+  maxForwardSpeed: 80
+  reverseBoost: 8
+  maxReverseSpeed: -20
+  returnRate: 30
 --- !u!23 &1542820794
 MeshRenderer:
   m_ObjectHideFlags: 0
