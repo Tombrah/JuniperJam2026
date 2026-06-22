@@ -1250,7 +1250,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 5ee7a14a119eb3e4ebb60e3629ed8b9d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1347,7 +1347,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb0d674492df8048962338f88284a2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextureChanger
-  materials: []
+  materials:
+  - {fileID: 2100000, guid: 5ee7a14a119eb3e4ebb60e3629ed8b9d, type: 2}
+  - {fileID: 2100000, guid: 1390736d419242744b05c5b0527fabc3, type: 2}
+  - {fileID: 2100000, guid: efe256ee0fee43b43ac564de4d441559, type: 2}
 --- !u!114 &1025761579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1360,7 +1363,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab6ab5173d4002248b1ffd9b37bf8e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeshChanger
-  meshes: []
+  meshes:
+  - {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1542820791
 GameObject:
   m_ObjectHideFlags: 0
