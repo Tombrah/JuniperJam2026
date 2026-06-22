@@ -6,7 +6,7 @@ public class FoodItem : MonoBehaviour
     public CookedState state;
 
     [SerializeField] private float cookTime = 5;
-    [SerializeField] private float percentageThreshold = 1.5f;
+    [SerializeField] private float burnThreshold = 1.5f;
     [SerializeField] private float percentage;
 
     public event EventHandler OnStateChanged;
@@ -32,7 +32,7 @@ public class FoodItem : MonoBehaviour
             state = CookedState.Cooked;
             OnStateChanged?.Invoke(this, EventArgs.Empty);
         }
-        else if (percentage > percentageThreshold && state != CookedState.Burnt)
+        else if (percentage > burnThreshold && state != CookedState.Burnt)
         {
             state = CookedState.Burnt;
             OnStateChanged?.Invoke(this, EventArgs.Empty);
