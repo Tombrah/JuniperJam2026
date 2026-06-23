@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlateSpinner : MonoBehaviour
 {
+    public static PlateSpinner Instance { get; private set; }
+
     [Header("Base Spin")]
     [SerializeField] private float baseSpeed = 35f;
 
@@ -17,15 +19,32 @@ public class PlateSpinner : MonoBehaviour
     [Header("Return")]
     [SerializeField] private float returnRate = 50f;
 
+    [Header("Food Location")]
+    public Transform location;
+
     private float currentSpeed;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
-        currentSpeed = baseSpeed;
+        currentSpeed = 0;
+        GameManager.Instance.OnStateChanged += GameStateChanged;
+    }
+
+    private void GameStateChanged(object sender, System.EventArgs e)
+    {
+        if (GameManager.Instance.state == GameState.Playing) currentSpeed = baseSpeed;
+        else currentSpeed = 0;
     }
 
     private void Update()
     {
+        if (GameManager.Instance.state != GameState.Playing) return;
+
         float scroll = 0f;
 
         if (Mouse.current != null)
