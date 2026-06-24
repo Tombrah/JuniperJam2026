@@ -65,6 +65,6 @@ public class PlateSpinner : MonoBehaviour
 
         currentSpeed = Mathf.Clamp(currentSpeed, maxReverseSpeed, maxForwardSpeed);
 
-        transform.Rotate(Vector3.up * currentSpeed * Time.deltaTime, Space.Self);
+        transform.Rotate(Vector3.forward * currentSpeed * Time.deltaTime, Space.Self);
     }
 }
