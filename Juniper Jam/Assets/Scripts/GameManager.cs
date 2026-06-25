@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public Action OnFoodGrabbed;
     public Action OnStartEvaluation;
 
+    public Action<FoodData> OnShowDescription;
+    public Action OnHideDescription;
+
     private Food selectedObject;
 
     private void Awake()
@@ -41,6 +44,7 @@ public class GameManager : MonoBehaviour
             if (selectedObject != null && Input.GetMouseButtonDown(0))
             {
                 SetGameState(GameState.Preperation);
+                OnHideDescription?.Invoke();
             }
         }
         else if (state == GameState.Playing)

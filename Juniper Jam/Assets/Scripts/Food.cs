@@ -6,6 +6,7 @@ public class Food : MonoBehaviour
 {
     private const string MOVEID = "moveid";
 
+    [SerializeField] private FoodData data;
     [SerializeField] private Vector3 fridgePos;
 
     private struct Col
@@ -94,6 +95,7 @@ public class Food : MonoBehaviour
         if (gameManager.state != GameState.Selection) return;
 
         gameManager.SetSelectedObject(this);
+        gameManager.OnShowDescription?.Invoke(data);
         TweenMove(new Vector3(fridgePos.x, fridgePos.y + 0.2f, fridgePos.z), 0.5f);
     }
 
@@ -102,6 +104,7 @@ public class Food : MonoBehaviour
         if (gameManager.state != GameState.Selection) return;
 
         gameManager.SetSelectedObject(null);
+        gameManager.OnHideDescription?.Invoke();
         TweenMove(fridgePos, 0.5f);
     }
 
