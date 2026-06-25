@@ -16,7 +16,7 @@ public class Microwave : MonoBehaviour
 
     private void OnStateChanged(object sender, System.EventArgs e)
     {
-        if (GameManager.Instance.state == GameState.GameFinished)
+        if (GameManager.Instance.state == GameState.CookFinished)
         {
             ani.SetTrigger(OPEN);
         }

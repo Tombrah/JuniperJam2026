@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332d0e2177f2ea645850b9867e910447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Food
+  data: {fileID: 0}
   fridgePos: {x: 0, y: 0, z: 0}
 --- !u!65 &9024422699253463822
 BoxCollider:
@@ -142,7 +143,16 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 62d8c3005f10ea244bac3c828ba546dc, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 4928725667958906130}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 62d8c3005f10ea244bac3c828ba546dc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1660888788295830013}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 62d8c3005f10ea244bac3c828ba546dc, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 8775930747713690930}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 62d8c3005f10ea244bac3c828ba546dc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3963808307353809914}
   m_SourcePrefab: {fileID: 100100000, guid: 62d8c3005f10ea244bac3c828ba546dc, type: 3}
 --- !u!4 &2337738339024214813 stripped
 Transform:
@@ -154,6 +164,54 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 62d8c3005f10ea244bac3c828ba546dc, type: 3}
   m_PrefabInstance: {fileID: 2881153532061613302}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &4928725667958906130
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114942892882903463}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &1660888788295830013
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114942892882903463}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9379088, y: 0.14194536, z: 1.2477171}
+  m_Center: {x: 0, y: 0.07311529, z: 0}
 --- !u!114 &8775930747713690930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,3 +228,19 @@ MonoBehaviour:
   cookTime: 5
   burnThreshold: 1.5
   percentage: 0
+--- !u!114 &3963808307353809914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114942892882903463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb0d674492df8048962338f88284a2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextureChanger
+  materials:
+  - {fileID: -8224030775104889123, guid: 62d8c3005f10ea244bac3c828ba546dc, type: 3}
+  - {fileID: -6292969105809944957, guid: 5b2a26379676ab54ba52c450f26ae823, type: 3}
+  - {fileID: 7262240786436365247, guid: 5618d07a35f32c840a94c4b57b3090bc, type: 3}

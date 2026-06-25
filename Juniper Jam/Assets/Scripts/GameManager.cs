@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,9 +8,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public GameState state;
-
+    [Header("Food Datas")]
+    [SerializeField] private FoodData[] datas;
+    [Header("Scipts")]
     public Microwave microwave;
     public CameraTriggers cameraTriggers;
+    [Header("Transforms")]
     public Transform plateSpinner;
     public Transform foodMicrowaveLocation;
     public Transform foodCameraLocation;
@@ -27,6 +31,8 @@ public class GameManager : MonoBehaviour
 
     private Food selectedObject;
 
+    public Dictionary<FoodData, bool> successfulCook;
+
     private void Awake()
     {
         Instance = this;
@@ -35,6 +41,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         state = GameState.Selection;
+        successfulCook = new Dictionary<FoodData, bool>();
+        foreach (FoodData data in datas)
+        {
+            successfulCook.Add(data, false);
+        }
     }
 
     private void Update()
@@ -49,9 +60,9 @@ public class GameManager : MonoBehaviour
         }
         else if (state == GameState.Playing)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetMouseButtonDown(0))
             {
-                SetGameState(GameState.GameFinished);
+                SetGameState(GameState.CookFinished);
             }
         }
         else if (state == GameState.Resetting)
@@ -63,6 +74,26 @@ public class GameManager : MonoBehaviour
     public void SetGameState(GameState newState)
     {
         state = newState;
+
+        if (state == GameState.Resetting)
+        {
+            bool isComplete = true;
+            foreach (FoodData data in datas)
+            {
+                if (successfulCook[data] == false)
+                {
+                    isComplete = false;
+                    break;
+                }
+            }
+
+            if (isComplete)
+            {
+                //GAME OVER YOU WIN!
+                state = GameState.GameOver;
+            }
+        }
+
         OnStateChanged?.Invoke(this, EventArgs.Empty);
     }
 
@@ -75,6 +106,11 @@ public class GameManager : MonoBehaviour
     {
         return selectedObject;
     }
+
+    public void UpdateCookedState(FoodData food)
+    {
+        successfulCook[food] = true;
+    }
 }
 
 public enum GameState
@@ -82,6 +118,7 @@ public enum GameState
     Selection,
     Preperation,
     Playing,
-    GameFinished,
-    Resetting
+    CookFinished,
+    Resetting,
+    GameOver
 }

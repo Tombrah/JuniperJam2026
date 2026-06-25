@@ -35,6 +35,18 @@ public class Food : MonoBehaviour
     {
         if (gameManager.GetSelectedObject() != this) return;
 
+        bool isCooked = true;
+        foreach (Transform child in transform)
+        {
+            FoodItem item = child.GetComponent<FoodItem>();
+            if (item.state != CookedState.Cooked)
+            {
+                isCooked = false;
+                break;
+            }
+        }
+        if (isCooked) gameManager.UpdateCookedState(data);
+
         transform.DOMove(gameManager.foodCameraLocation.position, 0.4f).OnComplete(() =>
         {
             BoxCollider col = transform.AddComponent<BoxCollider>();
@@ -82,7 +94,7 @@ public class Food : MonoBehaviour
                     transform.DORotate(Vector3.zero, 0.1f).SetEase(Ease.InOutQuad);
                 }
                 break;
-            case GameState.GameFinished:
+            case GameState.CookFinished:
                 break;
             default:
                 break;
