@@ -3,7 +3,7 @@ using DG.Tweening;
 
 public class Food : MonoBehaviour
 {
-    const string MOVEID = "moveid";
+    private const string MOVEID = "moveid";
 
     [SerializeField] private Vector3 fridgePos;
 
@@ -14,6 +14,17 @@ public class Food : MonoBehaviour
         fridgePos = transform.position;
         gameManager = GameManager.Instance;
         gameManager.OnStateChanged += GameStateChanged;
+        gameManager.OnAtMicrowave += Food_OnAtMicrowave;
+    }
+
+    private void Food_OnAtMicrowave()
+    {
+        if (gameManager.GetSelectedObject() != this) return;
+
+        transform.DOMove(gameManager.foodMicrowaveLocation.position, 0.4f).OnComplete(() =>
+        {
+            gameManager.OnFoodPlaced?.Invoke();
+        });
     }
 
     private void GameStateChanged(object sender, System.EventArgs e)
@@ -28,13 +39,17 @@ public class Food : MonoBehaviour
                 {
                     Destroy(GetComponent<Collider>());
                     transform.parent = Camera.main.transform;
+                    transform.DOMove(gameManager.foodCameraLocation.position, 0.2f).OnComplete(() =>
+                        {
+                            gameManager.OnFoodGrabbed?.Invoke();
+                        });
                 }
                 break;
             case GameState.Playing:
                 if (gameManager.GetSelectedObject() == this)
                 {
-                    transform.parent = PlateSpinner.Instance.transform;
-                    transform.rotation = Quaternion.Euler(0, 0, 0);
+                    transform.parent = gameManager.plateSpinner;
+                    transform.DORotate(Vector3.zero, 0.1f).SetEase(Ease.InOutQuad);
                 }
                 break;
             case GameState.GameFinished:
@@ -50,7 +65,7 @@ public class Food : MonoBehaviour
         if (gameManager.state != GameState.Selection) return;
 
         gameManager.SetSelectedObject(this);
-        TweenMove(new Vector3(fridgePos.x, fridgePos.y + 0.3f, fridgePos.z), 0.5f);
+        TweenMove(new Vector3(fridgePos.x, fridgePos.y + 0.2f, fridgePos.z), 0.5f);
     }
 
     private void OnMouseExit()

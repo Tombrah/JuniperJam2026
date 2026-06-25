@@ -1,39 +1,42 @@
+using JetBrains.Annotations;
+using System;
 using UnityEngine;
 
 public class CameraTriggers : MonoBehaviour
 {
+    const string LOOKATMICROWAVE = "Prep";
+    const string LOOKATFRIDGE = "Reset";
+
     private Animator ani;
+    private GameManager gameManager;
 
     private void Start()
     {
         ani = GetComponent<Animator>();
-        GameManager.Instance.OnStateChanged += GameStateChanged;
+        gameManager = GameManager.Instance;
+        GameManager.Instance.OnFoodGrabbed += OnFoodGrabbed;
     }
 
-    private void GameStateChanged(object sender, System.EventArgs e)
+    private void OnFoodGrabbed()
     {
-        if (GameManager.Instance.state == GameState.Preperation)
+        if (gameManager.state == GameState.Preperation)
         {
-            ani.SetTrigger("Prep");
+            SetTrigger(LOOKATMICROWAVE);
         }
-        else if(GameManager.Instance.state == GameState.GameFinished)
-        {
-            ani.SetTrigger("Reset");
-        }
-    }
-
-    public void StartGame()
-    {
-        GameManager.Instance.SetGameState(GameState.Playing);
     }
 
     public void StartSelection()
     {
-        GameManager.Instance.SetGameState(GameState.Selection);
+        gameManager.OnAtFridge?.Invoke();
     }
 
-    public void PlaceFood()
+    public void AtMicrowave()
     {
-        GameManager.Instance.GetSelectedObject().TweenMove(PlateSpinner.Instance.location.position, 0.4f);
+        gameManager.OnAtMicrowave?.Invoke();
+    }
+
+    public void SetTrigger(string name)
+    {
+        ani.SetTrigger(name);
     }
 }

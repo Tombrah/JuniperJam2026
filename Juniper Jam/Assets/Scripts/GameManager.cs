@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,13 +8,30 @@ public class GameManager : MonoBehaviour
 
     public GameState state;
 
+    public Microwave microwave;
+    public CameraTriggers cameraTriggers;
+    public Transform plateSpinner;
+    public Transform foodMicrowaveLocation;
+    public Transform foodCameraLocation;
+
+    //EVENTS
     public event EventHandler OnStateChanged;
+    public Action OnAtMicrowave;
+    public Action OnAtFridge;
+    public Action OnFoodPlaced;
+    public Action OnFoodGrabbed;
+    public Action OnStartEvaluation;
 
     private Food selectedObject;
 
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        state = GameState.Selection;
     }
 
     private void Update()
@@ -33,11 +51,6 @@ public class GameManager : MonoBehaviour
                 SetGameState(GameState.GameFinished);
             }
         }
-    }
-
-    private void Start()
-    {
-        state = GameState.Selection;
     }
 
     public void SetGameState(GameState newState)
