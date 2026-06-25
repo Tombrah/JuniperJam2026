@@ -3322,7 +3322,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: MealPrep
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3963808307353809914, guid: 6f341ddf82bb54d47a0871b387e6b311, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

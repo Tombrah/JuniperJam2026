@@ -11,9 +11,12 @@ public class FoodItem : MonoBehaviour
 
     public event EventHandler OnStateChanged;
 
+    private Morpher morpher;
+
     private void Start()
     {
         state = CookedState.Raw;
+        TryGetComponent<Morpher>(out morpher);
     }
 
     public void Cook()
@@ -21,6 +24,7 @@ public class FoodItem : MonoBehaviour
         if (state == CookedState.Burnt) return;
 
         percentage += Time.deltaTime / cookTime;
+        if (morpher != null) morpher.SetSlider(percentage);
 
         TryUpdateState();
     }
