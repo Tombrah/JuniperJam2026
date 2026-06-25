@@ -9,6 +9,8 @@ public class FoodItem : MonoBehaviour
     [SerializeField] private float burnThreshold = 1.5f;
     [SerializeField] private float percentage;
 
+    [SerializeField] private ParticleSpawn particleSpawn;
+
     public event EventHandler OnStateChanged;
 
     private Morpher morpher;
@@ -34,6 +36,7 @@ public class FoodItem : MonoBehaviour
         if (percentage > 1 && state == CookedState.Raw)
         {
             state = CookedState.Cooked;
+            particleSpawn.PlayCooked();
             OnStateChanged?.Invoke(this, EventArgs.Empty);
         }
         else if (percentage > burnThreshold && state != CookedState.Burnt)

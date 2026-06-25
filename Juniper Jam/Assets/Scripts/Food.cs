@@ -131,6 +131,7 @@ public class Food : MonoBehaviour
     {
         if (gameManager.state != GameState.Selection) return;
 
+        DOTween.Kill(MOVEID);
         gameManager.SetSelectedObject(null);
         gameManager.OnHideDescription?.Invoke();
         transform.DOMove(fridgePos, 0.5f).SetId(MOVEID).SetEase(Ease.InOutQuad);

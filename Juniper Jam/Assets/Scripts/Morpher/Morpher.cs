@@ -88,11 +88,16 @@ public class Morpher : MonoBehaviour
 
         CreatePairs1();
         CreatePairs2();
-        CreatePairs3();
-        CreatePairs4();
 
-        _finalMaterial = new Material(_slider < 0.5 ? _oldMat : _newMat);
+        _finalMaterial = new Material(_oldMat);
 
+        GameManager.Instance.OnStateChanged += OnStateChanged;
+    }
+
+    private void OnStateChanged(object sender, System.EventArgs e)
+    {
+        if (GameManager.Instance.state == GameState.Playing) IsDeforming = true;
+        else IsDeforming = false;
     }
 
     /// <summary>
@@ -124,39 +129,11 @@ public class Morpher : MonoBehaviour
 
         for (int i = 0; i < _newVertices.Length; i++)
         {
-            var newVertex = _newVertices[i];
+            var oldVertex = _newVertices[i];
 
-            var nearestToNewVertex = _oldVertices.OrderBy(v => Vector3.Distance(v, newVertex)).FirstOrDefault();
+            var nearestToOldVertex = _newestVertices.OrderBy(v => Vector3.Distance(v, oldVertex)).FirstOrDefault();
 
-            _pairsOfVertices2.Add(new VertexPair(newVertex, nearestToNewVertex));
-        }
-    }
-
-    private void CreatePairs3()
-    {
-        _pairsOfVertices3 = new List<VertexPair>();
-
-        for (int i = 0; i < _newestVertices.Length; i++)
-        {
-            var newVertex = _newestVertices[i];
-
-            var nearestToNewVertex = _newVertices.OrderBy(v => Vector3.Distance(v, newVertex)).FirstOrDefault();
-
-            _pairsOfVertices3.Add(new VertexPair(newVertex, nearestToNewVertex));
-        }
-    }
-
-    private void CreatePairs4()
-    {
-        _pairsOfVertices4 = new List<VertexPair>();
-
-        for (int i = 0; i < _newestVertices.Length; i++)
-        {
-            var newVertex = _newestVertices[i];
-
-            var nearestToNewVertex = _newVertices.OrderBy(v => Vector3.Distance(v, newVertex)).FirstOrDefault();
-
-            _pairsOfVertices4.Add(new VertexPair(newVertex, nearestToNewVertex));
+            _pairsOfVertices2.Add(new VertexPair(oldVertex, nearestToOldVertex));
         }
     }
 
@@ -180,53 +157,71 @@ public class Morpher : MonoBehaviour
     /// </summary>
     private void Deform()
     {
-        if (_slider < 0.5f)
+        float extendedThreshold = 1 + ((GetComponent<FoodItem>().GetBurnThreshold() - 1) * 0.5f);
+        float extendedSlider = (_slider - 1) / (GetComponent<FoodItem>().GetBurnThreshold() - 1);
+
+        if (_slider < 1)
         {
             _finalVertices = _pairsOfVertices1.Select(p => Vector3.Lerp(p.Vertex1, p.Vertex2, _slider)).ToList();
         }
-        else if (_slider < 1f)
+        else if (_slider < extendedThreshold)
         {
-            _finalVertices = _pairsOfVertices2.Select(p => Vector3.Lerp(p.Vertex2, p.Vertex1, _slider)).ToList();
-        }
-        else if (_slider < 1 + (GetComponent<FoodItem>().GetBurnThreshold() - 1) * 0.5f)
-        {
-            _finalVertices = _pairsOfVertices3.Select(p => Vector3.Lerp(p.Vertex1, p.Vertex2, _slider)).ToList();
+            _finalVertices = _pairsOfVertices2.Select(p => Vector3.Lerp(p.Vertex1, p.Vertex2, extendedSlider)).ToList();
         }
         else
         {
-            _finalVertices = _pairsOfVertices3.Select(p => Vector3.Lerp(p.Vertex2, p.Vertex1, _slider)).ToList();
+            _finalVertices = _newestVertices.ToList();
         }
 
         _interpolatedMesh.Clear();
 
         _interpolatedMesh.SetVertices(_finalVertices);
-        _interpolatedMesh.triangles = _slider < 0.5f ? _oldTriangles : _newTriangles;
+        if (_slider < 1) _interpolatedMesh.triangles = _oldTriangles;
+        else if (_slider < extendedThreshold) _interpolatedMesh.triangles = _newTriangles;
+        else _interpolatedMesh.triangles = _newestTriangles;
 
 
-        _interpolatedMesh.bounds = _slider < 0.5f ? _oldMesh.bounds : _newMesh.bounds;
-        _interpolatedMesh.uv = _slider < 0.5f ? _oldMesh.uv : _newMesh.uv;
-        _interpolatedMesh.uv2 = _slider < 0.5f ? _oldMesh.uv2 : _newMesh.uv2;
-        _interpolatedMesh.uv3 = _slider < 0.5f ? _oldMesh.uv3 : _newMesh.uv3;
+        if (_slider < 1)
+        {
+            _interpolatedMesh.bounds = _oldMesh.bounds;
+            _interpolatedMesh.uv = _oldMesh.uv;
+            _interpolatedMesh.uv2 = _oldMesh.uv2;
+            _interpolatedMesh.uv3 = _oldMesh.uv3;
+        }
+        else if (_slider < extendedThreshold)
+        {
+            _interpolatedMesh.bounds = _newMesh.bounds;
+            _interpolatedMesh.uv = _newMesh.uv;
+            _interpolatedMesh.uv2 = _newMesh.uv2;
+            _interpolatedMesh.uv3 = _newMesh.uv3;
+        }
+        else
+        {
+            _interpolatedMesh.bounds = _newestMesh.bounds;
+            _interpolatedMesh.uv = _newestMesh.uv;
+            _interpolatedMesh.uv2 = _newestMesh.uv2;
+            _interpolatedMesh.uv3 = _newestMesh.uv3;
+        }
 
         _interpolatedMesh.RecalculateNormals();
 
         if (_slider < 1)
         {
             _finalMaterial.Lerp(_oldMat, _newMat, _slider); 
-            _finalMaterial.SetTexture("_MainTex", _slider < 0.5f ? _oldMat.GetTexture("_MainTex") : _newMat.GetTexture("_MainTex"));
+            _finalMaterial.SetTexture("_MainTex", _slider < 0.8f ? _oldMat.GetTexture("_MainTex") : _newMat.GetTexture("_MainTex"));
         }
         else
         {
-            float tempSlider = _slider / GetComponent<FoodItem>().GetBurnThreshold();
-            _finalMaterial.Lerp(_newMat, _newestMat, tempSlider);
-            _finalMaterial.SetTexture("_MainTex", tempSlider < 0.5f ? _newMat.GetTexture("_MainTex") : _newestMat.GetTexture("_MainTex"));
+            Debug.Log(extendedSlider);
+            _finalMaterial.Lerp(_newMat, _newestMat, extendedSlider);
+            _finalMaterial.SetTexture("_MainTex", extendedSlider < 0.8f ? _newMat.GetTexture("_MainTex") : _newestMat.GetTexture("_MainTex"));
         }
             //_finalMaterial.SetTexture("_BumpMap", _slider < 0.5f ? _oldMat.GetTexture("_BumpMap") : _newMat.GetTexture("_BumpMap"));
             //_finalMaterial.SetTexture("_MetallicGlossMap", _slider < 0.5f ? _oldMat.GetTexture("_MetallicGlossMap") : _newMat.GetTexture("_MetallicGlossMap"));
             //_finalMaterial.SetTexture("_OcclusionMap", _slider < 0.5f ? _oldMat.GetTexture("_OcclusionMap") : _newMat.GetTexture("_OcclusionMap"));
             //_finalMaterial.SetTexture("_EmissionMap", _slider < 0.5f ? _oldMat.GetTexture("_EmissionMap") : _newMat.GetTexture("_EmissionMap"));
 
-            _renderer.material = _finalMaterial;
+        _renderer.material = _finalMaterial;
     }
 
 }
