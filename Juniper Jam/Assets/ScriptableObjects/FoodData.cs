@@ -5,4 +5,5 @@ public class FoodData : ScriptableObject
 {
     public Sprite Icon;
     public string Description = "INSERT ITEM DESCRIPTION";
+    public GameObject Prefab;
 }

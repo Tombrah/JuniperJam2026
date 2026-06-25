@@ -7,7 +7,8 @@ public class Food : MonoBehaviour
     private const string MOVEID = "moveid";
 
     [SerializeField] private FoodData data;
-    [SerializeField] private Vector3 fridgePos;
+    private Vector3 fridgePos;
+    private Quaternion rotation;
 
     private struct Col
     {
@@ -19,9 +20,12 @@ public class Food : MonoBehaviour
 
     private GameManager gameManager;
 
+
     private void Start()
     {
         fridgePos = transform.position;
+        rotation = transform.rotation;
+
         gameManager = GameManager.Instance;
         gameManager.OnStateChanged += GameStateChanged;
         gameManager.OnAtMicrowave += Food_OnAtMicrowave;
@@ -29,6 +33,13 @@ public class Food : MonoBehaviour
 
         startCol.centre = GetComponent<BoxCollider>().center;
         startCol.size = GetComponent<BoxCollider>().size;
+    }
+
+    private void OnDestroy()
+    {
+        gameManager.OnStateChanged -= GameStateChanged;
+        gameManager.OnAtMicrowave -= Food_OnAtMicrowave;
+        gameManager.OnStartEvaluation -= Food_OnStartEvaluation;
     }
 
     private void Food_OnStartEvaluation()
@@ -53,9 +64,12 @@ public class Food : MonoBehaviour
             col.center = startCol.centre;
             col.size = startCol.size;
 
+            Instantiate(data.Prefab, fridgePos, rotation);
+
             Rigidbody rb = transform.AddComponent<Rigidbody>();
             rb.AddForce((gameManager.cameraTriggers.transform.position - transform.position).normalized * 5, ForceMode.Impulse);
             gameManager.SetGameState(GameState.Resetting);
+            Destroy(this.gameObject, 5f);
         });
     }
 

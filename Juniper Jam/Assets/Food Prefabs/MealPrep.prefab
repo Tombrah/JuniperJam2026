@@ -46,8 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332d0e2177f2ea645850b9867e910447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Food
-  data: {fileID: 0}
-  fridgePos: {x: 0, y: 0, z: 0}
+  data: {fileID: 11400000, guid: f46f5c0636c8c8e438a6e20e786fa7ed, type: 2}
 --- !u!65 &9024422699253463822
 BoxCollider:
   m_ObjectHideFlags: 0
