@@ -121,8 +121,10 @@ public class Food : MonoBehaviour
         if (gameManager.state != GameState.Selection) return;
 
         gameManager.SetSelectedObject(this);
-        gameManager.OnShowDescription?.Invoke(data);
-        TweenMove(new Vector3(fridgePos.x, fridgePos.y + 0.2f, fridgePos.z), 0.5f);
+        transform.DOMove(new Vector3(fridgePos.x, fridgePos.y + 0.2f, fridgePos.z), 0.5f).SetId(MOVEID).SetEase(Ease.InOutQuad).OnComplete(() =>
+        {
+            gameManager.OnShowDescription?.Invoke(data);
+        });
     }
 
     private void OnMouseExit()
@@ -131,11 +133,6 @@ public class Food : MonoBehaviour
 
         gameManager.SetSelectedObject(null);
         gameManager.OnHideDescription?.Invoke();
-        TweenMove(fridgePos, 0.5f);
-    }
-
-    public void TweenMove(Vector3 pos, float time, Ease ease = Ease.InOutQuad)
-    {
-        transform.DOMove(pos, time).SetId(MOVEID).SetEase(ease);
+        transform.DOMove(fridgePos, 0.5f).SetId(MOVEID).SetEase(Ease.InOutQuad);
     }
 }
