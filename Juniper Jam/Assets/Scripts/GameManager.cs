@@ -47,9 +47,12 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                selectedObject = null;
                 SetGameState(GameState.GameFinished);
             }
+        }
+        else if (state == GameState.Resetting)
+        {
+            if (selectedObject != null) selectedObject = null;
         }
     }
 

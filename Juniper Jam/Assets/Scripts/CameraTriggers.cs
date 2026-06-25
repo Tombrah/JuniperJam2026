@@ -14,7 +14,16 @@ public class CameraTriggers : MonoBehaviour
     {
         ani = GetComponent<Animator>();
         gameManager = GameManager.Instance;
-        GameManager.Instance.OnFoodGrabbed += OnFoodGrabbed;
+        gameManager.OnFoodGrabbed += OnFoodGrabbed;
+        gameManager.OnStateChanged += Instance_OnStateChanged;
+    }
+
+    private void Instance_OnStateChanged(object sender, EventArgs e)
+    {
+        if (gameManager.state == GameState.Resetting)
+        {
+            SetTrigger(LOOKATFRIDGE);
+        }
     }
 
     private void OnFoodGrabbed()
@@ -27,6 +36,7 @@ public class CameraTriggers : MonoBehaviour
 
     public void StartSelection()
     {
+        gameManager.SetGameState(GameState.Selection);
         gameManager.OnAtFridge?.Invoke();
     }
 

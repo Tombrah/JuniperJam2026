@@ -1,11 +1,20 @@
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class Food : MonoBehaviour
 {
     private const string MOVEID = "moveid";
 
     [SerializeField] private Vector3 fridgePos;
+
+    private struct Col
+    {
+        public Vector3 centre;
+        public Vector3 size;
+    }
+
+    private Col startCol;
 
     private GameManager gameManager;
 
@@ -15,6 +24,26 @@ public class Food : MonoBehaviour
         gameManager = GameManager.Instance;
         gameManager.OnStateChanged += GameStateChanged;
         gameManager.OnAtMicrowave += Food_OnAtMicrowave;
+        gameManager.OnStartEvaluation += Food_OnStartEvaluation;
+
+        startCol.centre = GetComponent<BoxCollider>().center;
+        startCol.size = GetComponent<BoxCollider>().size;
+    }
+
+    private void Food_OnStartEvaluation()
+    {
+        if (gameManager.GetSelectedObject() != this) return;
+
+        transform.DOMove(gameManager.foodCameraLocation.position, 0.4f).OnComplete(() =>
+        {
+            BoxCollider col = transform.AddComponent<BoxCollider>();
+            col.center = startCol.centre;
+            col.size = startCol.size;
+
+            Rigidbody rb = transform.AddComponent<Rigidbody>();
+            rb.AddForce((gameManager.cameraTriggers.transform.position - transform.position).normalized * 5, ForceMode.Impulse);
+            gameManager.SetGameState(GameState.Resetting);
+        });
     }
 
     private void Food_OnAtMicrowave()
@@ -38,7 +67,7 @@ public class Food : MonoBehaviour
                 if (gameManager.GetSelectedObject() == this)
                 {
                     Destroy(GetComponent<Collider>());
-                    transform.parent = Camera.main.transform;
+                    transform.parent = gameManager.cameraTriggers.transform;
                     transform.DOMove(gameManager.foodCameraLocation.position, 0.2f).OnComplete(() =>
                         {
                             gameManager.OnFoodGrabbed?.Invoke();
