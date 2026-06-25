@@ -42,6 +42,11 @@ public class FoodItem : MonoBehaviour
             OnStateChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+
+    public float GetBurnThreshold()
+    {
+        return burnThreshold;
+    }
 }
 
 public enum CookedState

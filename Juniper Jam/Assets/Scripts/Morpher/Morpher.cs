@@ -31,34 +31,43 @@ public class Morpher : MonoBehaviour
     [SerializeField] private Mesh _oldMesh;
     [Tooltip("Mesh should be read/write enabled from the model import settings")]
     [SerializeField] private Mesh _newMesh;
+    [SerializeField] private Mesh _newestMesh;
 
     [SerializeField] private Material _oldMat;
     [SerializeField] private Material _newMat;
+    [SerializeField] private Material _newestMat;
 
-    [SerializeField] private MeshFilter _meshFilter;
-    [SerializeField] private Renderer _renderer;
+    private MeshFilter _meshFilter;
+    private Renderer _renderer;
 
-    [Range(0f, 1f)]
+    [Range(0f, 2f)]
     [SerializeField] private float _slider;
 
 
     private Vector3[] _oldVertices;
     private Vector3[] _newVertices;
+    private Vector3[] _newestVertices;
 
     private int[] _oldTriangles;
     private int[] _newTriangles;
+    private int[] _newestTriangles;
 
     private List<Vector3> _finalVertices;
 
     private Mesh _interpolatedMesh;
     private List<VertexPair> _pairsOfVertices1;
     private List<VertexPair> _pairsOfVertices2;
+    private List<VertexPair> _pairsOfVertices3;
+    private List<VertexPair> _pairsOfVertices4;
 
 
     private Material _finalMaterial;
 
     void Start()
     {
+        _meshFilter = GetComponent<MeshFilter>();
+        _renderer = GetComponent<Renderer>();
+
         _interpolatedMesh = new Mesh();
         _interpolatedMesh.MarkDynamic();
 
@@ -69,14 +78,18 @@ public class Morpher : MonoBehaviour
 
         _oldVertices = _oldMesh.vertices;
         _newVertices = _newMesh.vertices;
+        _newestVertices = _newestMesh.vertices;
 
         _oldTriangles = _oldMesh.triangles;
         _newTriangles = _newMesh.triangles;
+        _newestTriangles = _newestMesh.triangles;
 
         _finalVertices = new List<Vector3>(_oldVertices);
 
         CreatePairs1();
         CreatePairs2();
+        CreatePairs3();
+        CreatePairs4();
 
         _finalMaterial = new Material(_slider < 0.5 ? _oldMat : _newMat);
 
@@ -119,6 +132,34 @@ public class Morpher : MonoBehaviour
         }
     }
 
+    private void CreatePairs3()
+    {
+        _pairsOfVertices3 = new List<VertexPair>();
+
+        for (int i = 0; i < _newestVertices.Length; i++)
+        {
+            var newVertex = _newestVertices[i];
+
+            var nearestToNewVertex = _newVertices.OrderBy(v => Vector3.Distance(v, newVertex)).FirstOrDefault();
+
+            _pairsOfVertices3.Add(new VertexPair(newVertex, nearestToNewVertex));
+        }
+    }
+
+    private void CreatePairs4()
+    {
+        _pairsOfVertices4 = new List<VertexPair>();
+
+        for (int i = 0; i < _newestVertices.Length; i++)
+        {
+            var newVertex = _newestVertices[i];
+
+            var nearestToNewVertex = _newVertices.OrderBy(v => Vector3.Distance(v, newVertex)).FirstOrDefault();
+
+            _pairsOfVertices4.Add(new VertexPair(newVertex, nearestToNewVertex));
+        }
+    }
+
 
     void Update()
     {
@@ -143,9 +184,17 @@ public class Morpher : MonoBehaviour
         {
             _finalVertices = _pairsOfVertices1.Select(p => Vector3.Lerp(p.Vertex1, p.Vertex2, _slider)).ToList();
         }
-        else
+        else if (_slider < 1f)
         {
             _finalVertices = _pairsOfVertices2.Select(p => Vector3.Lerp(p.Vertex2, p.Vertex1, _slider)).ToList();
+        }
+        else if (_slider < 1 + (GetComponent<FoodItem>().GetBurnThreshold() - 1) * 0.5f)
+        {
+            _finalVertices = _pairsOfVertices3.Select(p => Vector3.Lerp(p.Vertex1, p.Vertex2, _slider)).ToList();
+        }
+        else
+        {
+            _finalVertices = _pairsOfVertices3.Select(p => Vector3.Lerp(p.Vertex2, p.Vertex1, _slider)).ToList();
         }
 
         _interpolatedMesh.Clear();
@@ -161,14 +210,23 @@ public class Morpher : MonoBehaviour
 
         _interpolatedMesh.RecalculateNormals();
 
-        _finalMaterial.Lerp(_oldMat, _newMat, _slider);
-        _finalMaterial.SetTexture("_MainTex", _slider < 0.5f ? _oldMat.GetTexture("_MainTex") : _newMat.GetTexture("_MainTex"));
-        //_finalMaterial.SetTexture("_BumpMap", _slider < 0.5f ? _oldMat.GetTexture("_BumpMap") : _newMat.GetTexture("_BumpMap"));
-        //_finalMaterial.SetTexture("_MetallicGlossMap", _slider < 0.5f ? _oldMat.GetTexture("_MetallicGlossMap") : _newMat.GetTexture("_MetallicGlossMap"));
-        //_finalMaterial.SetTexture("_OcclusionMap", _slider < 0.5f ? _oldMat.GetTexture("_OcclusionMap") : _newMat.GetTexture("_OcclusionMap"));
-        //_finalMaterial.SetTexture("_EmissionMap", _slider < 0.5f ? _oldMat.GetTexture("_EmissionMap") : _newMat.GetTexture("_EmissionMap"));
+        if (_slider < 1)
+        {
+            _finalMaterial.Lerp(_oldMat, _newMat, _slider); 
+            _finalMaterial.SetTexture("_MainTex", _slider < 0.5f ? _oldMat.GetTexture("_MainTex") : _newMat.GetTexture("_MainTex"));
+        }
+        else
+        {
+            float tempSlider = _slider / GetComponent<FoodItem>().GetBurnThreshold();
+            _finalMaterial.Lerp(_newMat, _newestMat, tempSlider);
+            _finalMaterial.SetTexture("_MainTex", tempSlider < 0.5f ? _newMat.GetTexture("_MainTex") : _newestMat.GetTexture("_MainTex"));
+        }
+            //_finalMaterial.SetTexture("_BumpMap", _slider < 0.5f ? _oldMat.GetTexture("_BumpMap") : _newMat.GetTexture("_BumpMap"));
+            //_finalMaterial.SetTexture("_MetallicGlossMap", _slider < 0.5f ? _oldMat.GetTexture("_MetallicGlossMap") : _newMat.GetTexture("_MetallicGlossMap"));
+            //_finalMaterial.SetTexture("_OcclusionMap", _slider < 0.5f ? _oldMat.GetTexture("_OcclusionMap") : _newMat.GetTexture("_OcclusionMap"));
+            //_finalMaterial.SetTexture("_EmissionMap", _slider < 0.5f ? _oldMat.GetTexture("_EmissionMap") : _newMat.GetTexture("_EmissionMap"));
 
-        _renderer.material = _finalMaterial;
+            _renderer.material = _finalMaterial;
     }
 
 }

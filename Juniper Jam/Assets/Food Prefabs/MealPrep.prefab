@@ -247,8 +247,10 @@ MonoBehaviour:
   IsDeforming: 1
   _oldMesh: {fileID: 3158651258000735782, guid: 62d8c3005f10ea244bac3c828ba546dc, type: 3}
   _newMesh: {fileID: -2165762424716650124, guid: 5b2a26379676ab54ba52c450f26ae823, type: 3}
+  _newestMesh: {fileID: 2721554989534972609, guid: 5618d07a35f32c840a94c4b57b3090bc, type: 3}
   _oldMat: {fileID: -8224030775104889123, guid: 62d8c3005f10ea244bac3c828ba546dc, type: 3}
   _newMat: {fileID: -6292969105809944957, guid: 5b2a26379676ab54ba52c450f26ae823, type: 3}
+  _newestMat: {fileID: 7262240786436365247, guid: 5618d07a35f32c840a94c4b57b3090bc, type: 3}
   _meshFilter: {fileID: 1719965177875961016}
   _renderer: {fileID: 3475226945347018866}
   _slider: 0
