@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour
     public Transform plateSpinner;
     public Transform foodMicrowaveLocation;
     public Transform foodCameraLocation;
-    [Header("Particles")]
-    public ParticleSystem cookedParticles;
 
     //EVENTS
     public event EventHandler OnStateChanged;

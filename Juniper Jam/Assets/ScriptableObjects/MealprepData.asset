@@ -15,4 +15,4 @@ MonoBehaviour:
   Icon: {fileID: 0}
   Description: Make sure your meal is heated evenly. Different food items may take
     longer than others
-  Prefab: {fileID: 8518241088684326816, guid: 6f341ddf82bb54d47a0871b387e6b311, type: 3}
+  Prefab: {fileID: 1087128624450440509, guid: 9300414fb3706e449a715bfefb928d44, type: 3}

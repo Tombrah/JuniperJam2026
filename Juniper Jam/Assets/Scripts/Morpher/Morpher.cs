@@ -25,6 +25,14 @@ public class VertexPair
 /// </summary>
 public class Morpher : MonoBehaviour
 {
+    const string TEXTUREMAP = "_BaseMap";
+
+    const string RAWTEX = "_RawTex";
+    const string COOKEDTEX = "_CookedTex";
+    const string BURNTTEX = "_BurntTex";
+    const string RAWCOOKEDLERP = "_lerp1";
+    const string COOKEDBURNTLERP = "_lerp2";
+
     public bool IsDeforming = true;
 
     [Tooltip("Mesh should be read/write enabled from the model import settings")]
@@ -32,10 +40,6 @@ public class Morpher : MonoBehaviour
     [Tooltip("Mesh should be read/write enabled from the model import settings")]
     [SerializeField] private Mesh _newMesh;
     [SerializeField] private Mesh _newestMesh;
-
-    [SerializeField] private Material _oldMat;
-    [SerializeField] private Material _newMat;
-    [SerializeField] private Material _newestMat;
 
     private MeshFilter _meshFilter;
     private Renderer _renderer;
@@ -57,8 +61,6 @@ public class Morpher : MonoBehaviour
     private Mesh _interpolatedMesh;
     private List<VertexPair> _pairsOfVertices1;
     private List<VertexPair> _pairsOfVertices2;
-    private List<VertexPair> _pairsOfVertices3;
-    private List<VertexPair> _pairsOfVertices4;
 
 
     private Material _finalMaterial;
@@ -89,9 +91,14 @@ public class Morpher : MonoBehaviour
         CreatePairs1();
         CreatePairs2();
 
-        _finalMaterial = new Material(_oldMat);
+        _finalMaterial = _renderer.material;
 
         GameManager.Instance.OnStateChanged += OnStateChanged;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnStateChanged -= OnStateChanged;
     }
 
     private void OnStateChanged(object sender, System.EventArgs e)
@@ -207,21 +214,12 @@ public class Morpher : MonoBehaviour
 
         if (_slider < 1)
         {
-            _finalMaterial.Lerp(_oldMat, _newMat, _slider); 
-            _finalMaterial.SetTexture("_MainTex", _slider < 0.8f ? _oldMat.GetTexture("_MainTex") : _newMat.GetTexture("_MainTex"));
+            _finalMaterial.SetFloat(RAWCOOKEDLERP, _slider);
         }
         else
         {
-            Debug.Log(extendedSlider);
-            _finalMaterial.Lerp(_newMat, _newestMat, extendedSlider);
-            _finalMaterial.SetTexture("_MainTex", extendedSlider < 0.8f ? _newMat.GetTexture("_MainTex") : _newestMat.GetTexture("_MainTex"));
+            _finalMaterial.SetFloat(COOKEDBURNTLERP, extendedSlider);
         }
-            //_finalMaterial.SetTexture("_BumpMap", _slider < 0.5f ? _oldMat.GetTexture("_BumpMap") : _newMat.GetTexture("_BumpMap"));
-            //_finalMaterial.SetTexture("_MetallicGlossMap", _slider < 0.5f ? _oldMat.GetTexture("_MetallicGlossMap") : _newMat.GetTexture("_MetallicGlossMap"));
-            //_finalMaterial.SetTexture("_OcclusionMap", _slider < 0.5f ? _oldMat.GetTexture("_OcclusionMap") : _newMat.GetTexture("_OcclusionMap"));
-            //_finalMaterial.SetTexture("_EmissionMap", _slider < 0.5f ? _oldMat.GetTexture("_EmissionMap") : _newMat.GetTexture("_EmissionMap"));
-
-        _renderer.material = _finalMaterial;
     }
 
 }

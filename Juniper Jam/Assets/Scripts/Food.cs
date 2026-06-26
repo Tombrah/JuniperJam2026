@@ -42,6 +42,7 @@ public class Food : MonoBehaviour
         gameManager.OnStartEvaluation -= Food_OnStartEvaluation;
     }
 
+
     private void Food_OnStartEvaluation()
     {
         if (gameManager.GetSelectedObject() != this) return;
@@ -49,11 +50,13 @@ public class Food : MonoBehaviour
         bool isCooked = true;
         foreach (Transform child in transform)
         {
-            FoodItem item = child.GetComponent<FoodItem>();
-            if (item.state != CookedState.Cooked)
+            if (child.TryGetComponent<FoodItem>(out FoodItem item))
             {
-                isCooked = false;
-                break;
+                if (item.state != CookedState.Cooked)
+                {
+                    isCooked = false;
+                    break;
+                }
             }
         }
         if (isCooked) gameManager.UpdateCookedState(data);
