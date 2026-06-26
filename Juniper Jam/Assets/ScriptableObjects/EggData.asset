@@ -15,5 +15,5 @@ MonoBehaviour:
   Type: 3
   Icon: {fileID: 21300000, guid: 12e26d703bd1b0a48b91a5dd3ce355b1, type: 3}
   Description: Should take about 15 seconds to cook. Don't leave it in too long...
-    something bad might happen
+    something bad might happen.
   Prefab: {fileID: 742612041681040759, guid: b58e72d95dbce8b44807870e440ada0f, type: 3}

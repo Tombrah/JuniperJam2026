@@ -2327,6 +2327,10 @@ MonoBehaviour:
   source: {fileID: 2137455410}
   microwave_open: {fileID: 8300000, guid: decbd4a09d7fb444182b56548021b440, type: 3}
   microwave_close: {fileID: 8300000, guid: d68bdc6c30e1e9e479a0cdcfc5ce4155, type: 3}
+  afterCooking:
+  - {fileID: 8300000, guid: c5f67a298ca1c4848b7252646751c18b, type: 3}
+  - {fileID: 8300000, guid: cc6a9857f4b000f498a4791a1e96ac47, type: 3}
+  - {fileID: 8300000, guid: 372c3a7627123d74b95db347d05a00f0, type: 3}
 --- !u!4 &1412821455
 Transform:
   m_ObjectHideFlags: 0
@@ -3137,7 +3141,7 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6ccf9d315cb16d44fa4c792e806f1a34, type: 2}
-  m_sharedMaterial: {fileID: -4192561127536062614, guid: 6ccf9d315cb16d44fa4c792e806f1a34, type: 2}
+  m_sharedMaterial: {fileID: -5590169954472704811, guid: 6ccf9d315cb16d44fa4c792e806f1a34, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4614,7 +4618,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: -4134462517785884784, guid: 48dbfc1392603de45afece11691828a0, type: 3}
+  m_Mesh: {fileID: -4134462517785884784, guid: b2b19634769ffa549aba262305b36797, type: 3}
 --- !u!4 &9125375641374703952
 Transform:
   m_ObjectHideFlags: 0
