@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff51a5fbb70a2ed49b55b79737136533, type: 3}
   m_Name: MealprepData
   m_EditorClassIdentifier: Assembly-CSharp::FoodData
+  Type: 1
   Icon: {fileID: 0}
   Description: Make sure your meal is heated evenly. Different food items may take
     longer than others

@@ -119,6 +119,11 @@ public class Food : MonoBehaviour
         }
     }
 
+    public FoodData GetData()
+    {
+        return data;
+    }
+
     private void OnMouseEnter()
     {
         Debug.Log("enter");

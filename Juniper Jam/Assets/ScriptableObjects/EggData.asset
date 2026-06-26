@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff51a5fbb70a2ed49b55b79737136533, type: 3}
   m_Name: EggData
   m_EditorClassIdentifier: Assembly-CSharp::FoodData
+  Type: 3
   Icon: {fileID: 0}
   Description: Should take about 15 seconds to cook. Don't leave it in too long...
     something bad might happen

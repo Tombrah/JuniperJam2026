@@ -274,6 +274,7 @@ MonoBehaviour:
   cookTime: 5
   burnThreshold: 1.5
   percentage: 0
+  brokenMesh: {fileID: -7356306404019398489, guid: 68fcb4b01a495604581315ff1a028eed, type: 3}
 --- !u!114 &480448588870740269
 MonoBehaviour:
   m_ObjectHideFlags: 0

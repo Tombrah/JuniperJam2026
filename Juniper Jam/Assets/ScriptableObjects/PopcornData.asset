@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff51a5fbb70a2ed49b55b79737136533, type: 3}
   m_Name: PopcornData
   m_EditorClassIdentifier: Assembly-CSharp::FoodData
+  Type: 4
   Icon: {fileID: 0}
   Description: Listen closely and you'll know when its cooked.
   Prefab: {fileID: 7873675943817436036, guid: c3eaade0b0993764faae49f897ee8eb6, type: 3}

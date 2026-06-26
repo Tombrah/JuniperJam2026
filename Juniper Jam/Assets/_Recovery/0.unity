@@ -3300,6 +3300,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7474691501196260376, guid: c3eaade0b0993764faae49f897ee8eb6, type: 3}
+      propertyPath: cookTime
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474691501196260376, guid: c3eaade0b0993764faae49f897ee8eb6, type: 3}
+      propertyPath: burnThreshold
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 7873675943817436036, guid: c3eaade0b0993764faae49f897ee8eb6, type: 3}
       propertyPath: m_Name
       value: Popcorn
@@ -3931,6 +3939,14 @@ PrefabInstance:
     - target: {fileID: 1947592293123086666, guid: 77558c7de5b411d458e90801e858880a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5579234586439628950, guid: 77558c7de5b411d458e90801e858880a, type: 3}
+      propertyPath: cookTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5579234586439628950, guid: 77558c7de5b411d458e90801e858880a, type: 3}
+      propertyPath: burnThreshold
+      value: 1.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

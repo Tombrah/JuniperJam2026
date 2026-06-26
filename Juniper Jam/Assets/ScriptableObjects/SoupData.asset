@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff51a5fbb70a2ed49b55b79737136533, type: 3}
   m_Name: SoupData
   m_EditorClassIdentifier: Assembly-CSharp::FoodData
+  Type: 2
   Icon: {fileID: 0}
   Description: Make sure the bowl doesn't get too hot
   Prefab: {fileID: 892325053748920412, guid: 77558c7de5b411d458e90801e858880a, type: 3}
