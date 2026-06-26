@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public Action OnFoodPlaced;
     public Action OnFoodGrabbed;
     public Action OnStartEvaluation;
+    public Action OnStartScreen;
 
     public Action<FoodData> OnShowDescription;
     public Action OnHideDescription;
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        state = GameState.Selection;
+        state = GameState.StartScreen;
         successfulCook = new Dictionary<FoodData, bool>();
         foreach (FoodData data in datas)
         {
@@ -115,6 +116,7 @@ public class GameManager : MonoBehaviour
 
 public enum GameState
 {
+    StartScreen,
     Selection,
     Preperation,
     Playing,

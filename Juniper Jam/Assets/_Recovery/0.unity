@@ -1182,6 +1182,7 @@ GameObject:
   - component: {fileID: 944991668}
   - component: {fileID: 944991667}
   - component: {fileID: 944991666}
+  - component: {fileID: 944991669}
   m_Layer: 0
   m_Name: Area Light (3)
   m_TagString: Untagged
@@ -1298,6 +1299,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2056927632}
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+--- !u!114 &944991669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944991665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6244de6cd976694cbb8518925035fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FridgeLight
 --- !u!1 &1142611543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,6 +1800,7 @@ GameObject:
   - component: {fileID: 1405527022}
   - component: {fileID: 1405527021}
   - component: {fileID: 1405527020}
+  - component: {fileID: 1405527023}
   m_Layer: 0
   m_Name: Area Light (1)
   m_TagString: Untagged
@@ -1903,6 +1917,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2056927632}
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+--- !u!114 &1405527023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405527019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6244de6cd976694cbb8518925035fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FridgeLight
 --- !u!1 &1412821453
 GameObject:
   m_ObjectHideFlags: 0
@@ -2589,6 +2615,8 @@ GameObject:
   - component: {fileID: 2060167326}
   - component: {fileID: 2060167325}
   - component: {fileID: 2060167324}
+  - component: {fileID: 2060167327}
+  - component: {fileID: 2060167328}
   m_Layer: 0
   m_Name: Area Light (2)
   m_TagString: Untagged
@@ -2705,6 +2733,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2056927632}
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+--- !u!114 &2060167327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060167323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6244de6cd976694cbb8518925035fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FridgeLight
+--- !u!114 &2060167328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060167323}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1beaf8f87db5134478fa31cbe0e0bf7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlickerScript
+  minFlickerSpeed: 0.01
+  maxFlickerSpeed: 0.15
 --- !u!1 &2137455409
 GameObject:
   m_ObjectHideFlags: 0

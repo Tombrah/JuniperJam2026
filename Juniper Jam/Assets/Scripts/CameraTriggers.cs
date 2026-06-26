@@ -6,6 +6,7 @@ public class CameraTriggers : MonoBehaviour
 {
     const string LOOKATMICROWAVE = "Prep";
     const string LOOKATFRIDGE = "Reset";
+    const string STARTGAMME = "Start";
 
     private Animator ani;
     private GameManager gameManager;
@@ -16,6 +17,12 @@ public class CameraTriggers : MonoBehaviour
         gameManager = GameManager.Instance;
         gameManager.OnFoodGrabbed += OnFoodGrabbed;
         gameManager.OnStateChanged += Instance_OnStateChanged;
+        gameManager.OnStartScreen += StartScreen;
+    }
+
+    private void StartScreen()
+    {
+        SetTrigger(STARTGAMME);
     }
 
     private void Instance_OnStateChanged(object sender, EventArgs e)

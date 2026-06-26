@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
+using UnityEngine.Networking;
 
 public class Food : MonoBehaviour
 {
@@ -42,7 +43,6 @@ public class Food : MonoBehaviour
         gameManager.OnStartEvaluation -= Food_OnStartEvaluation;
     }
 
-
     private void Food_OnStartEvaluation()
     {
         if (gameManager.GetSelectedObject() != this) return;
@@ -82,6 +82,7 @@ public class Food : MonoBehaviour
 
         transform.DOMove(gameManager.foodMicrowaveLocation.position, 0.4f).OnComplete(() =>
         {
+            transform.DOLookAt(transform.position + Vector3.forward, 0.5f);
             gameManager.OnFoodPlaced?.Invoke();
         });
     }
@@ -97,8 +98,8 @@ public class Food : MonoBehaviour
                 if (gameManager.GetSelectedObject() == this)
                 {
                     Destroy(GetComponent<Collider>());
-                    transform.parent = gameManager.cameraTriggers.transform;
-                    transform.DOMove(gameManager.foodCameraLocation.position, 0.2f).OnComplete(() =>
+                    transform.parent = gameManager.foodCameraLocation.transform;
+                    transform.DOMove(gameManager.foodCameraLocation.position, 0.2f).SetEase(Ease.InOutQuad).OnComplete(() =>
                         {
                             gameManager.OnFoodGrabbed?.Invoke();
                         });
@@ -107,8 +108,8 @@ public class Food : MonoBehaviour
             case GameState.Playing:
                 if (gameManager.GetSelectedObject() == this)
                 {
+                    //transform.LookAt(transform.position + Vector3.forward, Vector3.up);
                     transform.parent = gameManager.plateSpinner;
-                    transform.DORotate(Vector3.zero, 0.1f).SetEase(Ease.InOutQuad);
                 }
                 break;
             case GameState.CookFinished:
