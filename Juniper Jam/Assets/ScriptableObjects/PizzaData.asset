@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff51a5fbb70a2ed49b55b79737136533, type: 3}
   m_Name: PizzaData
   m_EditorClassIdentifier: Assembly-CSharp::FoodData
-  Icon: {fileID: 0}
+  Type: 0
+  Icon: {fileID: 21300000, guid: 2c09a1a5b820f3b4ab37c57263c03603, type: 3}
   Description: Make sure each slice of pizza is cooked evenly.
   Prefab: {fileID: 7335289531869785588, guid: 16c6b42ec23d5ff4c8c9eb7986520b92, type: 3}

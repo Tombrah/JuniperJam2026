@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MealprepData
   m_EditorClassIdentifier: Assembly-CSharp::FoodData
   Type: 1
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 1d943306d2613834ab80baa1eb913365, type: 3}
   Description: Make sure your meal is heated evenly. Different food items may take
     longer than others
   Prefab: {fileID: 1087128624450440509, guid: 9300414fb3706e449a715bfefb928d44, type: 3}
