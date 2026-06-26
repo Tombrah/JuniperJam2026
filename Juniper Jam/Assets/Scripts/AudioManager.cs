@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource source;
     [SerializeField] private AudioClip microwave_open;
     [SerializeField] private AudioClip microwave_close;
+    [SerializeField] private AudioClip[] afterCooking;
 
     private GameManager gm; 
 
@@ -14,11 +15,20 @@ public class AudioManager : MonoBehaviour
         gm = GameManager.Instance;
         gm.OnStateChanged += OnStateChanged;
         gm.OnFoodPlaced += OnFoodPlaced;
+        gm.OnCooked += Evaluate;
     }
 
     private void OnFoodPlaced()
     {
+        source.volume = 1;
         source.clip = microwave_close;
+        source.Play();
+    }
+
+    private void Evaluate(CookedState state)
+    {
+        source.volume = 0.5f;
+        source.clip = afterCooking[(int)state];
         source.Play();
     }
 

@@ -2,6 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine.Networking;
+using System.Collections;
 
 public class Food : MonoBehaviour
 {
@@ -48,12 +49,14 @@ public class Food : MonoBehaviour
         if (gameManager.GetSelectedObject() != this) return;
 
         bool isCooked = true;
+        CookedState cs = CookedState.Cooked;
         foreach (Transform child in transform)
         {
             if (child.TryGetComponent<FoodItem>(out FoodItem item))
             {
                 if (item.state != CookedState.Cooked)
                 {
+                    cs = item.state;
                     isCooked = false;
                     break;
                 }
@@ -68,12 +71,20 @@ public class Food : MonoBehaviour
             col.size = startCol.size;
 
             Instantiate(data.Prefab, fridgePos, rotation);
+            gameManager.OnCooked?.Invoke(cs);
 
-            Rigidbody rb = transform.AddComponent<Rigidbody>();
-            rb.AddForce((gameManager.cameraTriggers.transform.position - transform.position).normalized * 5, ForceMode.Impulse);
-            gameManager.SetGameState(GameState.Resetting);
+            StartCoroutine(ChangeStateAfterSeconds(GameState.Resetting, 2f));
             Destroy(this.gameObject, 5f);
         });
+    }
+
+    private IEnumerator ChangeStateAfterSeconds(GameState state, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        Rigidbody rb = transform.AddComponent<Rigidbody>();
+        rb.AddForce((gameManager.cameraTriggers.transform.position - transform.position).normalized * 5, ForceMode.Impulse);
+        gameManager.SetGameState(state);
     }
 
     private void Food_OnAtMicrowave()

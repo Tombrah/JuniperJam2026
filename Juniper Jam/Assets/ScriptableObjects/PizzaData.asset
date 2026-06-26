@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FoodData
   Type: 0
   Icon: {fileID: 21300000, guid: 2c09a1a5b820f3b4ab37c57263c03603, type: 3}
-  Description: Make sure each slice of pizza is cooked evenly.
+  Description: Better make sure each slice is cooked evenly.
   Prefab: {fileID: 7335289531869785588, guid: 16c6b42ec23d5ff4c8c9eb7986520b92, type: 3}
