@@ -130,6 +130,14 @@ public class Food : MonoBehaviour
                     Destroy(this.gameObject, 5f);
                 }
                 break;
+            case GameState.GameOver:
+                if (gameManager.GetSelectedObject() == this)
+                {
+                    Rigidbody rb = transform.AddComponent<Rigidbody>();
+                    rb.AddForce((gameManager.cameraTriggers.transform.position - transform.position).normalized * 5, ForceMode.Impulse);
+                    Destroy(this.gameObject, 5f);
+                }
+                break;
             default:
                 break;
         }

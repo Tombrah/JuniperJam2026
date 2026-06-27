@@ -97,7 +97,7 @@ public class AudioManager : MonoBehaviour
             case GameState.Resetting:
                 break;
             case GameState.GameOver:
-
+                gameOver.Play();
                 break;
             default:
                 break;
