@@ -72,19 +72,7 @@ public class Food : MonoBehaviour
 
             Instantiate(data.Prefab, fridgePos, rotation);
             gameManager.OnCooked?.Invoke(cs);
-
-            StartCoroutine(ChangeStateAfterSeconds(GameState.Resetting, 2f));
-            Destroy(this.gameObject, 5f);
         });
-    }
-
-    private IEnumerator ChangeStateAfterSeconds(GameState state, float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-
-        Rigidbody rb = transform.AddComponent<Rigidbody>();
-        rb.AddForce((gameManager.cameraTriggers.transform.position - transform.position).normalized * 5, ForceMode.Impulse);
-        gameManager.SetGameState(state);
     }
 
     private void Food_OnAtMicrowave()
@@ -129,11 +117,18 @@ public class Food : MonoBehaviour
             case GameState.Playing:
                 if (gameManager.GetSelectedObject() == this)
                 {
-                    //transform.LookAt(transform.position + Vector3.forward, Vector3.up);
                     transform.parent = gameManager.plateSpinner;
                 }
                 break;
             case GameState.CookFinished:
+                break;
+            case GameState.Resetting:
+                if (gameManager.GetSelectedObject() == this)
+                {
+                    Rigidbody rb = transform.AddComponent<Rigidbody>();
+                    rb.AddForce((gameManager.cameraTriggers.transform.position - transform.position).normalized * 5, ForceMode.Impulse);
+                    Destroy(this.gameObject, 5f);
+                }
                 break;
             default:
                 break;
@@ -147,7 +142,6 @@ public class Food : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        Debug.Log("enter");
         if (gameManager.state != GameState.Selection) return;
 
         gameManager.SetSelectedObject(this);

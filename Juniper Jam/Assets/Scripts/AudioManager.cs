@@ -9,13 +9,16 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource microwave_start;
     [SerializeField] private AudioSource microwave_on;
 
-    [Header("Popcorn")]
+    [Header("Food Sounds")]
     [SerializeField] private AudioSource popcorn;
+    [SerializeField] private AudioSource bowlBreak;
 
     [Header("After Cooking")]
     [SerializeField] private AudioSource[] afterCooking;
 
-    private GameManager gm; 
+    private GameManager gm;
+
+    private int index = -1;
 
     private void Start()
     {
@@ -23,6 +26,24 @@ public class AudioManager : MonoBehaviour
         gm.OnStateChanged += OnStateChanged;
         gm.OnFoodPlaced += OnFoodPlaced;
         gm.OnCooked += Evaluate;
+        gm.OnBowlBreak += BowlBreak;
+    }
+
+    private void Update()
+    {
+        if (index != -1)
+        {
+            if (!afterCooking[index].isPlaying)
+            {
+                index = -1;
+                gm.SetGameState(GameState.Resetting);
+            }
+        }
+    }
+
+    private void BowlBreak()
+    {
+        bowlBreak.Play();
     }
 
     private void OnFoodPlaced()
@@ -33,6 +54,7 @@ public class AudioManager : MonoBehaviour
     private void Evaluate(CookedState state)
     {
         afterCooking[(int)state].Play();
+        index = (int)state;
     }
 
     private void OnStateChanged(object sender, System.EventArgs e)

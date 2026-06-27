@@ -64,6 +64,7 @@ public class FoodItem : MonoBehaviour
                 GetComponent<Morpher>().IsDeforming = false;
                 GetComponent<MeshFilter>().mesh = brokenMesh;
                 GetComponent<MeshFilter>().mesh.RecalculateNormals();
+                GameManager.Instance.OnBowlBreak?.Invoke();
             }
         }
     }

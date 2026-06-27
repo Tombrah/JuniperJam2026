@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public Action OnStartEvaluation;
     public Action OnStartScreen;
     public Action<CookedState> OnCooked;
+    public Action OnBowlBreak;
 
     public Action<FoodData> OnShowDescription;
     public Action OnHideDescription;
