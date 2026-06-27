@@ -156,9 +156,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodItem
   state: 0
-  cookTime: 5
-  burnThreshold: 1.5
+  cookTime: 20
+  burnThreshold: 1.25
   percentage: 0
+  brokenMesh: {fileID: 0}
 --- !u!114 &5985805467885471371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde0c8909d18a1a4c806597e5417281f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParticleSpawn
-  cookedParticle: {fileID: 2757248464325473819}
+  cookedParticle: {fileID: 0}
   smokeParticle: {fileID: 0}
 --- !u!1 &7873675943817436036
 GameObject:
@@ -363,10 +364,5 @@ PrefabInstance:
 --- !u!4 &2017715623086219409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8532967239931356878, guid: c4257dcd9649aab4ba0ef235b79a7b90, type: 3}
-  m_PrefabInstance: {fileID: 7668343556350150239}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &2757248464325473819 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5487876987625435204, guid: c4257dcd9649aab4ba0ef235b79a7b90, type: 3}
   m_PrefabInstance: {fileID: 7668343556350150239}
   m_PrefabAsset: {fileID: 0}

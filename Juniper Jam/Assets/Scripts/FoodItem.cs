@@ -38,7 +38,11 @@ public class FoodItem : MonoBehaviour
         if (state == CookedState.Burnt) return;
 
         percentage += Time.deltaTime / cookTime;
-        if (morpher != null) morpher.SetSlider(percentage);
+        if (morpher != null)
+        {
+            if (parent.GetData().Type != FoodType.Popcorn) morpher.SetSlider(percentage);
+            else morpher.SetSlider(percentage * 2f);
+        }
 
         TryUpdateState();
     }

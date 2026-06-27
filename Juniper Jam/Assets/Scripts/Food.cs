@@ -141,10 +141,8 @@ public class Food : MonoBehaviour
         if (gameManager.state != GameState.Selection) return;
 
         gameManager.SetSelectedObject(this);
-        transform.DOMove(new Vector3(fridgePos.x, fridgePos.y + 0.2f, fridgePos.z), 0.5f).SetId(MOVEID).SetEase(Ease.InOutQuad).OnComplete(() =>
-        {
-            gameManager.OnShowDescription?.Invoke(data);
-        });
+        gameManager.OnShowDescription?.Invoke(data);
+        transform.DOMove(new Vector3(fridgePos.x, fridgePos.y + 0.2f, fridgePos.z), 0.5f).SetId(MOVEID).SetEase(Ease.InOutQuad);
     }
 
     private void OnMouseExit()
