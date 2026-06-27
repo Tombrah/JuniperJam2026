@@ -22,6 +22,7 @@ public class AudioManager : MonoBehaviour
     private GameManager gm;
 
     private int index = -1;
+    private bool end = false;
 
     private void Awake()
     {
@@ -45,6 +46,15 @@ public class AudioManager : MonoBehaviour
             {
                 index = -1;
                 gm.SetGameState(GameState.Resetting);
+            }
+        }
+
+        if (end)
+        {
+            if (!gameOver.isPlaying)
+            {
+                gm.OnEndScreen?.Invoke();
+                end = false;
             }
         }
     }
@@ -98,6 +108,7 @@ public class AudioManager : MonoBehaviour
                 break;
             case GameState.GameOver:
                 gameOver.Play();
+                end = true;
                 break;
             default:
                 break;
