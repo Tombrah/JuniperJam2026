@@ -103,6 +103,16 @@ public class Food : MonoBehaviour
         switch (gameManager.state)
         {
             case GameState.Selection:
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out RaycastHit hit, 20f))
+                {
+                    if (hit.collider.gameObject.GetComponent<Food>() == this)
+                    {
+                        gameManager.SetSelectedObject(this);
+                        gameManager.OnShowDescription?.Invoke(data);
+                        transform.DOMove(new Vector3(fridgePos.x, fridgePos.y + 0.2f, fridgePos.z), 0.5f).SetId(MOVEID).SetEase(Ease.InOutQuad);
+                    }
+                }
                 break;
             case GameState.Preperation:
                 DOTween.Kill(MOVEID);
