@@ -16,6 +16,10 @@ public class StartUI : MonoBehaviour
         quitButton.onClick.AddListener(() =>
         {
             Debug.Log("Quit");
+#if UNITY_WEBGL && !UNITY_EDITOR
+            Application.OpenURL("https://tombrah.itch.io/lunch-break");
+            
+#endif
         });
     }
 }

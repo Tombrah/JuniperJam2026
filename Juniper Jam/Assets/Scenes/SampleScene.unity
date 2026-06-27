@@ -3118,6 +3118,7 @@ MonoBehaviour:
   - {fileID: 1417787024}
   - {fileID: 971310368}
   - {fileID: 197265057}
+  gameOver: {fileID: 0}
 --- !u!4 &1412821455
 Transform:
   m_ObjectHideFlags: 0

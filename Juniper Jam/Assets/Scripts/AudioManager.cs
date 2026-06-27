@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager Instance { get; private set; }
+
     [Header("Microwave")]
     [SerializeField] private AudioSource microwave_open;
     [SerializeField] private AudioSource microwave_close;
@@ -15,10 +17,16 @@ public class AudioManager : MonoBehaviour
 
     [Header("After Cooking")]
     [SerializeField] private AudioSource[] afterCooking;
+    [SerializeField] private AudioSource gameOver;
 
     private GameManager gm;
 
     private int index = -1;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -39,6 +47,17 @@ public class AudioManager : MonoBehaviour
                 gm.SetGameState(GameState.Resetting);
             }
         }
+    }
+
+    public void SetPitch(float pitch)
+    {
+        pitch = Mathf.Clamp(pitch, 0.8f, 1.2f);
+        microwave_on.pitch = pitch;
+    }
+
+    public float GetPitch()
+    {
+        return microwave_on.pitch;
     }
 
     private void BowlBreak()
@@ -78,6 +97,7 @@ public class AudioManager : MonoBehaviour
             case GameState.Resetting:
                 break;
             case GameState.GameOver:
+
                 break;
             default:
                 break;

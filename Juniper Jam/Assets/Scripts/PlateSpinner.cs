@@ -52,14 +52,17 @@ public class PlateSpinner : MonoBehaviour
         if (scroll > 0f)
         {
             currentSpeed += forwardBoost;
+            AudioManager.Instance.SetPitch(AudioManager.Instance.GetPitch() + 0.01f);
         }
         else if (scroll < 0f)
         {
             currentSpeed -= reverseBoost;
+            AudioManager.Instance.SetPitch(AudioManager.Instance.GetPitch() - 0.01f);
         }
         else
         {
             currentSpeed = Mathf.MoveTowards(currentSpeed, baseSpeed + Random.Range(-50f, 50f), returnRate * Time.deltaTime);
+            AudioManager.Instance.SetPitch(Mathf.MoveTowards(AudioManager.Instance.GetPitch(), 1, Time.deltaTime * 0.1f));
         }
 
         currentSpeed = Mathf.Clamp(currentSpeed, maxReverseSpeed, maxForwardSpeed);
