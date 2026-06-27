@@ -157,6 +157,7 @@ MonoBehaviour:
   cookTime: 15
   burnThreshold: 1.2
   percentage: 0
+  brokenMesh: {fileID: 0}
 --- !u!1 &742612041681040759
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,5 +224,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.46, y: 0.43, z: 0.58}
+  m_Size: {x: 0.7, y: 0.58, z: 0.7}
   m_Center: {x: 0, y: 0.18, z: 0}

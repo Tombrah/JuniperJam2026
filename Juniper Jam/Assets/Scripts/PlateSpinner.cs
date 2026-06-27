@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,8 +28,16 @@ public class PlateSpinner : MonoBehaviour
 
     private void GameStateChanged(object sender, System.EventArgs e)
     {
-        if (GameManager.Instance.state == GameState.Playing) currentSpeed = baseSpeed;
-        else currentSpeed = 0;
+        if (GameManager.Instance.state == GameState.Playing)
+        {
+            currentSpeed = baseSpeed;
+            StartCoroutine(Jitter());
+        }
+        else
+        {
+            StopAllCoroutines();
+            currentSpeed = 0;
+        }
     }
 
     private void Update()
@@ -50,11 +59,18 @@ public class PlateSpinner : MonoBehaviour
         }
         else
         {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, baseSpeed, returnRate * Time.deltaTime);
+            currentSpeed = Mathf.MoveTowards(currentSpeed, baseSpeed + Random.Range(-50f, 50f), returnRate * Time.deltaTime);
         }
 
         currentSpeed = Mathf.Clamp(currentSpeed, maxReverseSpeed, maxForwardSpeed);
 
         transform.Rotate(Vector3.forward * currentSpeed * Time.deltaTime, Space.Self);
+    }
+
+    private IEnumerator Jitter()
+    {
+        currentSpeed += Random.Range(-45f, 45f);
+        yield return new WaitForSeconds(Random.Range(1f,3f));
+        StartCoroutine(Jitter());
     }
 }
