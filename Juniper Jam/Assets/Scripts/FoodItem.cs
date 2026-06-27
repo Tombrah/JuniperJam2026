@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class FoodItem : MonoBehaviour
@@ -27,7 +28,7 @@ public class FoodItem : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.state == GameState.Playing && parent.GetData().Type == FoodType.Egg)
+        if (GameManager.Instance.state == GameState.Playing && parent.GetData().Type == FoodType.Egg && GameManager.Instance.GetSelectedObject() == parent)
         {
             Cook();
         }

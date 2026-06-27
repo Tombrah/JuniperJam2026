@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     [Header("Food Sounds")]
     [SerializeField] private AudioSource popcorn;
     [SerializeField] private AudioSource bowlBreak;
+    [SerializeField] private AudioSource flashbang;
 
     [Header("After Cooking")]
     [SerializeField] private AudioSource[] afterCooking;
@@ -23,6 +24,7 @@ public class AudioManager : MonoBehaviour
 
     private int index = -1;
     private bool end = false;
+    private bool flash = false;
 
     private void Awake()
     {
@@ -57,6 +59,15 @@ public class AudioManager : MonoBehaviour
                 end = false;
             }
         }
+
+        if (flash)
+        {
+            if (!flashbang.isPlaying)
+            {
+                gm.SetGameState(GameState.Resetting);
+                flash = false;
+            }
+        }
     }
 
     public void SetPitch(float pitch)
@@ -82,8 +93,18 @@ public class AudioManager : MonoBehaviour
 
     private void Evaluate(CookedState state)
     {
-        afterCooking[(int)state].Play();
-        index = (int)state;
+        if (gm.GetSelectedObject().GetData().Type == FoodType.Egg && state == CookedState.Burnt)
+        {
+            gm.OnFlashbang?.Invoke();
+            flashbang.Play();
+            gm.GetSelectedObject().transform.GetChild(0).GetComponent<Renderer>().enabled = false;
+            flash = true;
+        }
+        else
+        {
+            afterCooking[(int)state].Play();
+            index = (int)state;
+        }
     }
 
     private void OnStateChanged(object sender, System.EventArgs e)

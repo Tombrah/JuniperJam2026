@@ -72,8 +72,8 @@ public class PlateSpinner : MonoBehaviour
 
     private IEnumerator Jitter()
     {
-        currentSpeed += Random.Range(-45f, 45f);
-        yield return new WaitForSeconds(Random.Range(1f,3f));
+        currentSpeed += Random.Range(-200f, 200f);
+        yield return new WaitForSeconds(Random.Range(0.5f,2f));
         StartCoroutine(Jitter());
     }
 }

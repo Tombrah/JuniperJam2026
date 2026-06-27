@@ -6,7 +6,7 @@ using System.Collections;
 
 public class Food : MonoBehaviour
 {
-    private const string MOVEID = "moveid";
+    private string MOVEID = "moveid";
 
     [SerializeField] private FoodData data;
     private Vector3 fridgePos;
@@ -25,6 +25,7 @@ public class Food : MonoBehaviour
 
     private void Start()
     {
+        MOVEID += transform.name;
         fridgePos = transform.position;
         rotation = transform.rotation;
 
